@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const mongodbUrl = require('./mongodb');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -10,7 +11,7 @@ var usersRouter = require('./routes/users');
 var app = express();
 
 const mongoose = require('mongoose');
-const mongoDB = 'mongodb+srv://HuangYu:Wei1282683009@cluster0.bjlyo.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
+const mongoDB = mongodbUrl;
 mongoose.connect(mongoDB, {useNewUrlParser: true, useUnifiedTopology: true});
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error: '));

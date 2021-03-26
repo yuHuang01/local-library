@@ -2,20 +2,20 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const AuthorSchema = new Schema({
-  firstName: {
+  first_name: {
     type: String,
     required: true,
     maxLength: 100
   },
-  familyName: {
+  family_name: {
     type: String,
     required: true,
     maxLength: 100 
   },
-  dateOfBirth: {
+  date_of_birth: {
     type: Date
   },
-  dateOfDeath: {
+  date_of_death: {
     type: Date
   }
 });
@@ -24,11 +24,11 @@ const AuthorSchema = new Schema({
 
 //-full name
 AuthorSchema.virtual('fullName').get(() => {
-  return this.familyName + " " + this.firstName;
+  return this.family_name + " " + this.first_name;
 })
 //-lifespan
 AuthorSchema.virtual('lifespan').get(() => {
-  return (this.dateOfDeath.getYear() - this.dateOfBirth.getYear()).toString();
+  return (this.date_of_death.getYear() - this.date_of_birth.getYear()).toString();
 })
 //-url
 AuthorSchema.virtual('url').get(() => {
