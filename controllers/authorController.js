@@ -6,7 +6,7 @@ exports.author_list = (req, res) => {
 }
 
 //Display detail page for a specific author
-exports.auhtor_detail = (req, res) => {
+exports.author_detail = (req, res) => {
   res.send('NOT IMPLEMENTED: Author detail:' + req.params.id);
 }
 
@@ -37,6 +37,7 @@ exports.author_update_get = (req, res) => {
 
 
 //Handle author update on POST 
-exports.author_update_POST = (req, res) => {
+exports.author_update_post = (req, res) => {
   res.send('NOT IMPLEMENTED: Author update POST');
 }
+
