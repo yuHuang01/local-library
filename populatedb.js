@@ -10,10 +10,6 @@ if (!userArgs[0].startsWith('mongodb')) {
     return
 }
 */
-console.log('-----');
-console.log(userArgs);
-console.log('-----')
-
 var async = require('async')
 var Book = require('./models/book')
 var Author = require('./models/author')
@@ -81,7 +77,7 @@ function bookCreate(title, summary, isbn, author, genre, cb) {
       return
     }
     console.log('New Book: ' + book);
-    books.push(book)
+    books.push(book);
     cb(null, book)
   }  );
 }
@@ -229,4 +225,3 @@ function(err, results) {
     // All done, disconnect from database
     mongoose.connection.close();
 });
-
