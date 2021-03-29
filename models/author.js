@@ -23,15 +23,15 @@ const AuthorSchema = new Schema({
 //Virtual for author's:
 
 //-full name
-AuthorSchema.virtual('fullName').get(() => {
-  return this.family_name + " " + this.first_name;
+AuthorSchema.virtual('name').get(function(){
+  return this.family_name + ", " + this.first_name;
 })
 //-lifespan
-AuthorSchema.virtual('lifespan').get(() => {
+AuthorSchema.virtual('lifespan').get(function() {
   return (this.date_of_death.getYear() - this.date_of_birth.getYear()).toString();
 })
 //-url
-AuthorSchema.virtual('url').get(() => {
+AuthorSchema.virtual('url').get(function() {
   return '/catalog/author/' + this._id;
 })
 
