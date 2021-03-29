@@ -1,31 +1,29 @@
 //Import Models
-const AuthorModel = require('../models/author');
-const BookModel = require('../models/book');
-const BookInstanceModel = require('../models/bookinstance');
-const GenreModel = require('../models/genre');
+const Author = require('../models/author');
+const Book = require('../models/book');
+const BookInstance = require('../models/bookinstance');
+const Genre = require('../models/genre');
 
 //Require async
 const async = require('async');
-
-const Book = require('../models/book');
 
 
 exports.index = function(req, res) {
     async.parallel({
         author_count: (callback) => {
-            AuthorModel.countDocuments({}, callback)
+            Author.countDocuments({}, callback)
         },
         book_count: (callback) => {
-            BookModel.countDocuments({}, callback);
+            Book.countDocuments({}, callback);
         },
         book_instance_count: (callback) => {
-            BookInstanceModel.countDocuments({}, callback);
+            BookInstance.countDocuments({}, callback);
         },
         book_instance_available_count: (callback) => {
-            BookInstanceModel.countDocuments({status: 'Available'}, callback);
+            BookInstance.countDocuments({status: 'Available'}, callback);
         },
         genre_count: (callback) => {
-            GenreModel.countDocuments({}, callback);
+            Genre.countDocuments({}, callback);
         }
     }, (err, results) => {
         res.render('index', {title: 'Local Library Home', error: err, data: results});
@@ -45,8 +43,29 @@ exports.book_list = function(req, res, next) {
 };
 
 // Display detail page for a specific book.
-exports.book_detail = function(req, res) {
-    res.send('NOT IMPLEMENTED: Book detail: ' + req.params.id);
+exports.book_detail = function(req, res, next) {
+    async.parallel({
+        book: (callback) => {
+            Book.findById(req.params.id)
+                .populate('genre')
+                .populate('author')
+                .exec(callback);
+        },
+        book_instance: (callback) => {
+            BookInstance.find({'book': req.params.id})
+                .exec(callback);
+        }
+    }, (err, results) => {
+        if(err) return next(err)
+
+        if(results.book == null) {
+            let err = new Error ('Book not found');
+            err.status = 404;
+            return next(err);
+        }
+
+        res.render('book_detail', {title: results.book.title, book: results.book, book_instances: results.book_instance});
+    })
 };
 
 // Display book create form on GET.
