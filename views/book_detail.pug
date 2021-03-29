@@ -17,16 +17,16 @@ block content
 
     each val in book_instances 
       hr
-        if val.status=='Available'
-          p.text-succes #{val.status}
-        else if val.status=='Maintenance'
-          p.text-danger #{val.status}
-        else 
-          p.text-warning #{val.status}
-        p #[strong Imprint:] #{val.imprint}
-        if val.status!='Available'
-          p #[strong Due back:] #{val.due_back}
-        p #[strong Id:]
-          a(href=val.url) #{val._id}
+      if val.status=='Available'
+        p.text-succes #{val.status}
+      else if val.status=='Maintenance'
+        p.text-danger #{val.status}
+      else 
+        p.text-warning #{val.status}
+      p #[strong Imprint:] #{val.imprint}
+      if val.status!='Available'
+        p #[strong Due back:] #{val.due_back}
+      p #[strong Id:]
+        a(href=val.url) #{val._id}
     else 
-    p There are no copies of this book in the library.
+      p There are no copies of this book in the library.
