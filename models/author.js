@@ -30,7 +30,12 @@ AuthorSchema.virtual('name').get(function(){
 })
 //-lifespan
 AuthorSchema.virtual('lifespan').get(function() {
-  return (this.date_of_death.getYear() - this.date_of_birth.getYear()).toString();
+  if(this.date_of_birth != undefined && this.date_of_death != undefined){
+    return (this.date_of_death.getYear() - this.date_of_birth.getYear()).toString();
+  } else {
+    return 'The lifespan of this author can\'t be calculated'
+  }
+
 })
 //-url
 AuthorSchema.virtual('url').get(function() {
